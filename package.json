@@ -11,6 +11,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.6.0",
+    "axios": "^1.6.2",
     "basic-ftp": "^5.0.3",
     "framer-motion": "^10.16.5",
     "next": "14.0.2",

@@ -1,7 +1,6 @@
-import Upload from "@/components/upload";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
 import Link from "next/link";
+import FormUpload from "./components/FormUpload";
 export default function AdminPage() {
   return (
     <>
@@ -9,9 +8,7 @@ export default function AdminPage() {
         Kembali
       </Button>
       <div className="grid gap-2 mt-2">
-        <form action="">
-          <Upload />
-        </form>
+        <FormUpload />
       </div>
     </>
   );
