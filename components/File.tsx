@@ -16,12 +16,11 @@ export default function File({ file }: { file: files }) {
           >
             {file.name}
           </Link>
-          {/* <h5 className="text-small tracking-tight text-default-400">
-            {file.size}
-          </h5> */}
+          <h5 className="text-small tracking-tight text-default-400">
+            Lorem, ipsum.
+          </h5>
         </div>
         <Button
-          formAction={async () => {}}
           color="primary"
           size="sm"
           isIconOnly
