@@ -3,10 +3,11 @@ import Upload from "@/components/upload";
 import { Button } from "@nextui-org/button";
 import { Card, CardHeader, Progress } from "@nextui-org/react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { HiOutlineUpload, HiX } from "react-icons/hi";
+
 export default function FormUpload() {
+
   const [files, setFiles] = useState<Array<File>>();
   const [progress, setProgress] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,11 +39,10 @@ export default function FormUpload() {
       })
       .finally(() => {
         setLoading(false);
-        abortControllerRef.current = new AbortController()
+        abortControllerRef.current = new AbortController();
       });
   };
 
-  const router = useRouter()
   return (
     <form onSubmit={onSubmit} className="space-y-5">
       {files && files.length ? (
@@ -70,7 +70,7 @@ export default function FormUpload() {
       ) : (
         <Upload setFiles={setFiles} />
       )}
-      {loading && (
+      {loading && progress > 0 && (
         <Progress
           aria-label="Uploading..."
           size="md"
@@ -99,7 +99,7 @@ export default function FormUpload() {
             onClick={(e) => {
               e.preventDefault();
               abortControllerRef.current.abort();
-              onReset()
+              onReset();
             }}
             type="submit"
             size="sm"

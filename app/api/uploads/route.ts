@@ -26,10 +26,13 @@ export async function POST(request: NextRequest) {
             console.log("Transferred", info.bytes)
             console.log("Transferred Overall", info.bytesOverall)
         })
-        const response = await ftp.uploadFrom(readable, `${dirID}.${ext}`)
+        const fileNameEnc = `${dirID}.${ext}`
+        const response = await ftp.uploadFrom(readable, fileNameEnc)
         if (response.code === 226) await prisma.files.create({
             data: {
                 name: file.name,
+                fileNameEnc,
+                size: file.size
             }
         })
         ftp.trackProgress()

@@ -7,12 +7,12 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="light">
-        <SocketProvider>
+        {/* <SocketProvider> */}
           <Header />
           <main className="wrapper">
             <div className="container">{children}</div>
           </main>
-        </SocketProvider>
+        {/* </SocketProvider> */}
       </NextThemesProvider>
     </NextUIProvider>
   );

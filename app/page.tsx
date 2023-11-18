@@ -20,6 +20,9 @@ export default async function HomePage({
           },
         }
       : undefined,
+    orderBy: {
+      name: "asc",
+    },
   });
   if (files.data.length > 0) return <ListFile files={files} />;
   else return <>FIle tidak ditemukan</>;
