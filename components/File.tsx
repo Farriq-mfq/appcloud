@@ -1,8 +1,10 @@
 "use client";
 
+import { client } from "@/utils/ftp";
 import { Button } from "@nextui-org/button";
 import { Card, CardHeader } from "@nextui-org/card";
 import { files } from "@prisma/client";
+import axios from "axios";
 import Link from "next/link";
 import { HiOutlineDownload } from "react-icons/hi";
 export default function File({ file }: { file: files }) {
@@ -24,6 +26,10 @@ export default function File({ file }: { file: files }) {
           color="primary"
           size="sm"
           isIconOnly
+          onClick={async (e) => {
+            e.preventDefault();
+            await axios.get("/api/download", { data: { name: file.name } });
+          }}
         >
           <HiOutlineDownload />
         </Button>
