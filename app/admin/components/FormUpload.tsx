@@ -5,7 +5,6 @@ import { Card, CardHeader, Progress } from "@nextui-org/react";
 import axios from "axios";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { HiOutlineUpload, HiX } from "react-icons/hi";
-
 export default function FormUpload() {
   const [files, setFiles] = useState<Array<File>>();
   const [progress, setProgress] = useState<number>(0);

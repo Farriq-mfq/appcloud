@@ -7,12 +7,14 @@ import {
   NavbarItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/react";
-import { CiSearch } from "react-icons/ci";
-import { HiOutlineDownload } from "react-icons/hi";
-import ToggleTheme from "./ToggleTheme";
 import { useRouter } from "next/navigation";
+import { CiSearch } from "react-icons/ci";
+import { HiLogout } from "react-icons/hi";
+import ToggleTheme from "./ToggleTheme";
+import { useSession, signOut } from "next-auth/react";
 export default function Header() {
   const router = useRouter();
+  const session = useSession();
   return (
     <Navbar className="border-b py-1">
       <NavbarBrand>
@@ -32,15 +34,25 @@ export default function Header() {
             onChange={(e) => {
               if (e.target.value.length > 0)
                 router.push(`/?search=${e.target.value}`);
-              else router.push('/')
+              else router.push("/");
             }}
           />
         </NavbarItem>
         <NavbarItem>
           <ToggleTheme />
-          <Button color="primary" className="ml-2" isIconOnly>
-            <HiOutlineDownload />
-          </Button>
+          {session.status === "authenticated" && (
+            <Button
+              onClick={async (e) => {
+                e.preventDefault();
+                await signOut();
+              }}
+              color="danger"
+              className="ml-2"
+              isIconOnly
+            >
+              <HiLogout />
+            </Button>
+          )}
         </NavbarItem>
       </NavbarContent>
     </Navbar>
