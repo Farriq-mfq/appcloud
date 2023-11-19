@@ -2,7 +2,7 @@ import { Client } from 'basic-ftp'
 
 export const client = async (): Promise<Client> => {
     const ftpClient = new Client();
-    ftpClient.ftp.verbose = true;
+    ftpClient.ftp.verbose = false;
     try {
         await ftpClient.access({
             host: "172.25.49.55",

@@ -58,7 +58,7 @@ figlet.text("Setup admin appCloud", function (err, data) { return __awaiter(void
             input: process.stdin,
             output: process.stdout,
         });
-        readline.question("Pilih Menu \n1.Tambah admin\n2.Reset admin database\nnomer : ", function (menu) {
+        readline.question("Pilih Menu \n1.Tambah admin\n2.Reset admin database\n3.Reset files database\nnomer : ", function (menu) {
             var menuInt = parseInt(menu);
             if (menuInt === 1) {
                 console.clear();
@@ -109,7 +109,7 @@ figlet.text("Setup admin appCloud", function (err, data) { return __awaiter(void
             }
             else if (menuInt === 2) {
                 console.clear();
-                figlet.text("Tambah admin", function (err, data) { return __awaiter(void 0, void 0, void 0, function () {
+                figlet.text("Reset admin", function (err, data) { return __awaiter(void 0, void 0, void 0, function () {
                     var deleteAll, e_2;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
@@ -136,6 +136,35 @@ figlet.text("Setup admin appCloud", function (err, data) { return __awaiter(void
                     });
                 }); });
             }
+            else if (menuInt === 3) {
+                console.clear();
+                figlet.text("Reset files database", function (err, data) { return __awaiter(void 0, void 0, void 0, function () {
+                    var deleteAll, e_3;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                console.log(data);
+                                console.log("Loading...");
+                                _a.label = 1;
+                            case 1:
+                                _a.trys.push([1, 3, , 4]);
+                                return [4 /*yield*/, prisma.$queryRaw(templateObject_2 || (templateObject_2 = __makeTemplateObject(["DELETE FROM files"], ["DELETE FROM files"])))];
+                            case 2:
+                                deleteAll = _a.sent();
+                                if (deleteAll)
+                                    console.log("Berhasil reset files database");
+                                process.exit();
+                                return [3 /*break*/, 4];
+                            case 3:
+                                e_3 = _a.sent();
+                                console.log("Gagal reset files database");
+                                process.exit();
+                                return [3 /*break*/, 4];
+                            case 4: return [2 /*return*/];
+                        }
+                    });
+                }); });
+            }
             else {
                 console.log("menu tidak tersedia");
                 process.exit();
@@ -144,4 +173,4 @@ figlet.text("Setup admin appCloud", function (err, data) { return __awaiter(void
         return [2 /*return*/];
     });
 }); });
-var templateObject_1;
+var templateObject_1, templateObject_2;

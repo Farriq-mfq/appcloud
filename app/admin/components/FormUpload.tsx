@@ -7,7 +7,6 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { HiOutlineUpload, HiX } from "react-icons/hi";
 
 export default function FormUpload() {
-
   const [files, setFiles] = useState<Array<File>>();
   const [progress, setProgress] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,6 +34,10 @@ export default function FormUpload() {
       })
       .then(() => {
         alert("Upload success");
+        onReset();
+      })
+      .catch(() => {
+        alert("Upload error");
         onReset();
       })
       .finally(() => {

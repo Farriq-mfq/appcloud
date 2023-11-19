@@ -20,7 +20,7 @@ figlet.text("Setup admin appCloud", async (err, data) => {
     });
 
 
-    readline.question("Pilih Menu \n1.Tambah admin\n2.Reset admin database\nnomer : ", (menu: string) => {
+    readline.question("Pilih Menu \n1.Tambah admin\n2.Reset admin database\n3.Reset files database\nnomer : ", (menu: string) => {
         const menuInt = parseInt(menu)
         if (menuInt === 1) {
             console.clear()
@@ -54,7 +54,7 @@ figlet.text("Setup admin appCloud", async (err, data) => {
             })
         } else if (menuInt === 2) {
             console.clear()
-            figlet.text("Tambah admin", async (err, data) => {
+            figlet.text("Reset admin", async (err, data) => {
                 console.log(data)
                 console.log(`Loading...`)
                 try {
@@ -63,6 +63,21 @@ figlet.text("Setup admin appCloud", async (err, data) => {
                     process.exit()
                 } catch (e) {
                     console.log("Gagal reset database admin")
+                    process.exit()
+
+                }
+            })
+        } else if (menuInt === 3) {
+            console.clear()
+            figlet.text("Reset files database", async (err, data) => {
+                console.log(data)
+                console.log(`Loading...`)
+                try {
+                    const deleteAll = await prisma.$queryRaw`DELETE FROM files`;
+                    if (deleteAll) console.log("Berhasil reset files database")
+                    process.exit()
+                } catch (e) {
+                    console.log("Gagal reset files database")
                     process.exit()
 
                 }
