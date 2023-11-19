@@ -13,7 +13,8 @@ datasource db {
 model files {
   id          String   @id @default(cuid())
   name        String
-  directoryId String?
+  fileNameEnc String
+  size        Int
   steps       steps[]
   createAt    DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -24,4 +25,12 @@ model steps {
   text    String
   files   files?  @relation(fields: [filesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   filesId String?
+}
+
+model users {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,15 +1,16 @@
 "use client";
 import Upload from "@/components/upload";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
 import { Card, CardHeader, Progress } from "@nextui-org/react";
-import { FormEvent, useEffect, useState } from "react";
-import { HiOutlineUpload, HiX } from "react-icons/hi";
 import axios from "axios";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { HiOutlineUpload, HiX } from "react-icons/hi";
+
 export default function FormUpload() {
   const [files, setFiles] = useState<Array<File>>();
   const [progress, setProgress] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const abortControllerRef = useRef<AbortController>(new AbortController());
   let formdata = new FormData();
   useEffect(() => {
     if (files && files.length > 0) {
@@ -26,6 +27,7 @@ export default function FormUpload() {
     setLoading(true);
     axios
       .post("/api/upload", formdata, {
+        signal: abortControllerRef.current.signal,
         onUploadProgress(e) {
           if (e.total) setProgress((e.loaded / e.total) * 100);
         },
@@ -34,10 +36,16 @@ export default function FormUpload() {
         alert("Upload success");
         onReset();
       })
+      .catch(() => {
+        alert("Upload error");
+        onReset();
+      })
       .finally(() => {
         setLoading(false);
+        abortControllerRef.current = new AbortController();
       });
   };
+
   return (
     <form onSubmit={onSubmit} className="space-y-5">
       {files && files.length ? (
@@ -65,14 +73,7 @@ export default function FormUpload() {
       ) : (
         <Upload setFiles={setFiles} />
       )}
-      {/* <Input
-        type="text"
-        variant="bordered"
-        placeholder="Masukan nama disini...."
-        size="sm"
-        isDisabled={loading}
-      /> */}
-      {loading && (
+      {loading && progress > 0 && (
         <Progress
           aria-label="Uploading..."
           size="md"
@@ -86,15 +87,31 @@ export default function FormUpload() {
           showValueLabel={true}
         />
       )}
-      <Button
-        type="submit"
-        size="sm"
-        color="primary"
-        startContent={!loading && <HiOutlineUpload />}
-        isLoading={loading}
-      >
-        {loading ? "Uploading..." : "Upload"}
-      </Button>
+      <div className="flex gap-2 items-center">
+        <Button
+          type="submit"
+          size="sm"
+          color="primary"
+          startContent={!loading && <HiOutlineUpload />}
+          isLoading={loading}
+        >
+          {loading ? "Uploading..." : "Upload"}
+        </Button>
+        {loading && (
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              abortControllerRef.current.abort();
+              onReset();
+            }}
+            type="submit"
+            size="sm"
+            color="danger"
+          >
+            Batal
+          </Button>
+        )}
+      </div>
     </form>
   );
 }
