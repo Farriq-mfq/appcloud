@@ -5,10 +5,10 @@ export const client = async (): Promise<Client> => {
     ftpClient.ftp.verbose = false;
     try {
         await ftpClient.access({
-            host: "172.25.49.55",
-            user: "farriq",
-            password: "farriq",
-            port: 21,
+            host: process.env.FTP_HOST,
+            user: process.env.FTP_USER,
+            password: process.env.FTP_PASSWORD,
+            port: process.env.FTP_PORT,
         })
     }
     catch (err) {
