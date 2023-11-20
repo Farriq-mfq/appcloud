@@ -14,13 +14,17 @@ export default function Upload({
     onDrop,
     multiple: false,
     maxFiles: 1,
+    accept: {
+      "application/zip": [".zip"],  
+      "application/x-rar-compressed": [".rar"],
+    },
   });
 
   return (
     <div {...getRootProps()}>
       <Card
         shadow="none"
-        className={`border border-dashed h-40 ${
+        className={`border border-dashed h-64 mt-4 ${
           isDragActive ? "border-primary" : "border-default"
         }`}
       >

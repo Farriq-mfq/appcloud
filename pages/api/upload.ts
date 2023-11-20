@@ -12,6 +12,7 @@ export const config = {
     },
 };
 
+const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const form = new IncomingForm({
@@ -19,7 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             maxFileSize: Infinity,
             maxFieldsSize: Infinity,
         });
-        const prisma = new PrismaClient()
         const ftp = await client()
         form.parse(req, async (err, fields, files) => {
             if (err) {
@@ -31,6 +31,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (!file) {
                 return res.status(404).json({ success: false })
             }
+            const acceptedContentTypes: string[] = [
+                "application/zip",
+                "application/x-rar-compressed",
+                "application/x-zip-compressed"
+            ];
+            const mimeType = file.mimetype
+            if (!acceptedContentTypes.includes(mimeType!)) return res.status(400).json({ message: "file not allowed" });
             const fileBuffer: Buffer = fs.readFileSync(file.filepath);
             const bytes = fileBuffer.buffer
             const buffer = Buffer.from(bytes)

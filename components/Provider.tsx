@@ -11,7 +11,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
       <NextThemesProvider attribute="class" defaultTheme="light">
         <SessionProvider>
           {path === "/auth/login" ? (
-            <div className="bg-default-100 min-h-screen grid place-items-center px-2">{children}</div>
+            <div className="min-h-screen grid place-items-center px-2">{children}</div>
           ) : (
             <>
               <Header />

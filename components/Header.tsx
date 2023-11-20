@@ -12,13 +12,16 @@ import { CiSearch } from "react-icons/ci";
 import { HiLogout } from "react-icons/hi";
 import ToggleTheme from "./ToggleTheme";
 import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
 export default function Header() {
   const router = useRouter();
   const session = useSession();
   return (
     <Navbar className="border-b py-1">
       <NavbarBrand>
-        <p className="font-bold text-inherit">Appcloud</p>
+        <Link href={'/'}>
+          <p className="font-bold text-inherit">Appcloud</p>
+        </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem>

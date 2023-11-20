@@ -87,15 +87,17 @@ export default function FormUpload() {
         />
       )}
       <div className="flex gap-2 items-center">
-        <Button
-          type="submit"
-          size="sm"
-          color="primary"
-          startContent={!loading && <HiOutlineUpload />}
-          isLoading={loading}
-        >
-          {loading ? "Uploading..." : "Upload"}
-        </Button>
+        {files && files.length && (
+          <Button
+            type="submit"
+            size="sm"
+            color="primary"
+            startContent={!loading && <HiOutlineUpload />}
+            isLoading={loading}
+          >
+            {loading ? "Uploading..." : "Upload"}
+          </Button>
+        )}
         {loading && (
           <Button
             onClick={(e) => {
